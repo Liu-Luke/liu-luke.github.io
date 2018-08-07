@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>使用C#开发运行在.Net2.0平台上的HID应用程序,遇到的那些坑 | Garlic的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="当我们在用C#开发HID应用时，由于是通过DllImport调用的Windows API，在刚开始试用了各种开源HID库，经过尝试均无法正常工作，不是发不出去，就是接受不到消息，经过各种折腾，最后发现由于在调用HID相关的Windows API时，需要在32位的编译平台下编译才可以，于是用刚开始找的开源HID库都调试通过了，由于现成的HID库不符合业务需求，所以重构了一个比较简单的基于.Net2">
+<meta name="keywords" content="C#,HID,通信,类库,.Net Framework 2.0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用C#开发运行在.Net2.0平台上的HID应用程序,遇到的那些坑">
+<meta property="og:url" content="http://greatgarlic.github.io/2016/05/22/HID-Library_1/index.html">
+<meta property="og:site_name" content="Garlic的博客">
+<meta property="og:description" content="当我们在用C#开发HID应用时，由于是通过DllImport调用的Windows API，在刚开始试用了各种开源HID库，经过尝试均无法正常工作，不是发不出去，就是接受不到消息，经过各种折腾，最后发现由于在调用HID相关的Windows API时，需要在32位的编译平台下编译才可以，于是用刚开始找的开源HID库都调试通过了，由于现成的HID库不符合业务需求，所以重构了一个比较简单的基于.Net2">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://greatgarlic.github.io/assets/BlogImages/HID-Library_1/1.jpg">
+<meta property="og:updated_time" content="2016-05-23T07:34:17.075Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用C#开发运行在.Net2.0平台上的HID应用程序,遇到的那些坑">
+<meta name="twitter:description" content="当我们在用C#开发HID应用时，由于是通过DllImport调用的Windows API，在刚开始试用了各种开源HID库，经过尝试均无法正常工作，不是发不出去，就是接受不到消息，经过各种折腾，最后发现由于在调用HID相关的Windows API时，需要在32位的编译平台下编译才可以，于是用刚开始找的开源HID库都调试通过了，由于现成的HID库不符合业务需求，所以重构了一个比较简单的基于.Net2">
+<meta name="twitter:image" content="http://greatgarlic.github.io/assets/BlogImages/HID-Library_1/1.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="Garlic的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/assets/BlogImages/WebTitle.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/assets/BlogImages/GreatGarlic.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">GreatGarlic</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">热爱编程的大蒜君</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+					    <div class="icon-wrap icon-ribbon" data-idx="0">
+							<div class="ribbon"></div>
+						</div>
+						<div class="icon-wrap icon-house hide" data-idx="1">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+					    <li>标签</li>
+						<li>菜单</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Net-Framework-2-0/" style="font-size: 10px;">.Net Framework 2.0</a> <a href="/tags/AOP/" style="font-size: 10px;">AOP</a> <a href="/tags/Alibaba/" style="font-size: 10px;">Alibaba</a> <a href="/tags/C/" style="font-size: 10px;">C#</a> <a href="/tags/HID/" style="font-size: 10px;">HID</a> <a href="/tags/IOC/" style="font-size: 10px;">IOC</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/Java-Service-Wrapper/" style="font-size: 10px;">Java Service Wrapper</a> <a href="/tags/Java程序部署/" style="font-size: 10px;">Java程序部署</a> <a href="/tags/Mybatis/" style="font-size: 10px;">Mybatis</a> <a href="/tags/NIO/" style="font-size: 10px;">NIO</a> <a href="/tags/Netty/" style="font-size: 10px;">Netty</a> <a href="/tags/Oracle数据维护/" style="font-size: 10px;">Oracle数据维护</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/Spring-Cache/" style="font-size: 10px;">Spring-Cache</a> <a href="/tags/Windows服务/" style="font-size: 10px;">Windows服务</a> <a href="/tags/canal/" style="font-size: 10px;">canal</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/npm/" style="font-size: 20px;">npm</a> <a href="/tags/otter/" style="font-size: 10px;">otter</a> <a href="/tags/主键ID生成/" style="font-size: 10px;">主键ID生成</a> <a href="/tags/事务/" style="font-size: 10px;">事务</a> <a href="/tags/事务管理/" style="font-size: 10px;">事务管理</a> <a href="/tags/内存池/" style="font-size: 10px;">内存池</a> <a href="/tags/性能优化/" style="font-size: 10px;">性能优化</a> <a href="/tags/数据库同步/" style="font-size: 10px;">数据库同步</a> <a href="/tags/类库/" style="font-size: 10px;">类库</a> <a href="/tags/网络共享磁盘/" style="font-size: 10px;">网络共享磁盘</a> <a href="/tags/通信/" style="font-size: 10px;">通信</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">西北大学10级，来自陕西宝鸡，擅长各项Java、C#服务端技能，喜欢研究移动端开发，正在努力学习C++，是一个对计算机技术有浓厚兴趣的小屌丝。</div>
+				</section>
+				
+			</div>
+			<nav class="header-nav" style="margin-top: 100%;">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/GreatGarlic" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/GreatGarlic" title="weibo">weibo</a>
+					        
+						</div>
+			</nav>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">GreatGarlic</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/assets/BlogImages/GreatGarlic.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">GreatGarlic</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">热爱编程的大蒜君</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/GreatGarlic" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/GreatGarlic" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-HID-Library_1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/22/HID-Library_1/" class="article-date">
+  	<time datetime="2016-05-22T15:30:30.000Z" itemprop="datePublished">2016-05-22</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      使用C#开发运行在.Net2.0平台上的HID应用程序,遇到的那些坑
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Net-Framework-2-0/">.Net Framework 2.0</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HID/">HID</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/类库/">类库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/通信/">通信</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+   <div class="article-entry" itemprop="articleBody">
+      
+        
+        <div id="toc" class="article-toc">
+          
+          <hr/>
+        </div>
+        
+        <blockquote>
+<p style="line-height:200%">当我们在用C#开发HID应用时，由于是通过DllImport调用的Windows API，在刚开始试用了各种开源HID库，经过尝试均无法正常工作，不是发不出去，就是接受不到消息，经过各种折腾，最后发现由于在调用HID相关的Windows API时，需要在32位的编译平台下编译才可以，于是用刚开始找的开源HID库都调试通过了，由于现成的HID库不符合业务需求，所以重构了一个比较简单的基于.Net2.0的HID库.<a href="http://liuyuan.ml/HidLibrary" target="_blank" rel="noopener"><font color="#CC9933" size="5px">HidLibrary</font></a></p>
+
+</blockquote>
+<a id="more"></a>
+<blockquote>
+<blockquote>
+<ul>
+<li>支持HID设备插入和拔出事件通知</li>
+<li>支持异步接收设备数据</li>
+<li>支持主机一次性发送超过64字节的数据</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>在这里说明如何设置编译器的编译平台，流程为:<br><code>右击项目</code>-&gt;<code>属性</code>-&gt;<code>生成</code>选项卡-&gt;<code>目标平台</code>-&gt;选择<code>x86</code>-&gt;保存即可。</p>
+</blockquote>
+<blockquote>
+<p style="line-height:200%"><font color="red" size="5px">注意：</font>要求所有依赖该库的项目和库本身都要设置为<code>x86</code>编译平台,如图：</p>
+</blockquote>
+<blockquote>
+<p><img src="/assets/BlogImages/HID-Library_1/1.jpg" alt=""></p>
+</blockquote>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/07/29/oracle-data-import-and-export/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Oracle 数据导入导出
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/05/22/javaServiceWrapper_1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Java Service Wrapper 包装为Windows服务时，程序无法访问网络磁盘的解决方案</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="HID-Library_1" data-title="使用C#开发运行在.Net2.0平台上的HID应用程序,遇到的那些坑" data-url="http://greatgarlic.github.io/2016/05/22/HID-Library_1/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"greatgarlic"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		
+    	</div>
+      	<div class="footer-right">
+      		&copy; 2018 GreatGarlic
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Garlic的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="西北大学10级，来自陕西宝鸡，擅长各项Java服务端技能，喜欢研究移动端开发。">
+<meta name="keywords" content="Java,NIO,Netty,Android,Web">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Garlic的博客">
+<meta property="og:url" content="http://greatgarlic.github.io/index.html">
+<meta property="og:site_name" content="Garlic的博客">
+<meta property="og:description" content="西北大学10级，来自陕西宝鸡，擅长各项Java服务端技能，喜欢研究移动端开发。">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Garlic的博客">
+<meta name="twitter:description" content="西北大学10级，来自陕西宝鸡，擅长各项Java服务端技能，喜欢研究移动端开发。">
+  
+    <link rel="alternative" href="/atom.xml" title="Garlic的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/assets/BlogImages/WebTitle.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/assets/BlogImages/GreatGarlic.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">GreatGarlic</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">热爱编程的大蒜君</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+					    <div class="icon-wrap icon-ribbon" data-idx="0">
+							<div class="ribbon"></div>
+						</div>
+						<div class="icon-wrap icon-house hide" data-idx="1">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+					    <li>标签</li>
+						<li>菜单</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Net-Framework-2-0/" style="font-size: 10px;">.Net Framework 2.0</a> <a href="/tags/AOP/" style="font-size: 10px;">AOP</a> <a href="/tags/Alibaba/" style="font-size: 10px;">Alibaba</a> <a href="/tags/C/" style="font-size: 10px;">C#</a> <a href="/tags/HID/" style="font-size: 10px;">HID</a> <a href="/tags/IOC/" style="font-size: 10px;">IOC</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/Java-Service-Wrapper/" style="font-size: 10px;">Java Service Wrapper</a> <a href="/tags/Java程序部署/" style="font-size: 10px;">Java程序部署</a> <a href="/tags/Mybatis/" style="font-size: 10px;">Mybatis</a> <a href="/tags/NIO/" style="font-size: 10px;">NIO</a> <a href="/tags/Netty/" style="font-size: 10px;">Netty</a> <a href="/tags/Oracle数据维护/" style="font-size: 10px;">Oracle数据维护</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/Spring-Cache/" style="font-size: 10px;">Spring-Cache</a> <a href="/tags/Windows服务/" style="font-size: 10px;">Windows服务</a> <a href="/tags/canal/" style="font-size: 10px;">canal</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/npm/" style="font-size: 20px;">npm</a> <a href="/tags/otter/" style="font-size: 10px;">otter</a> <a href="/tags/主键ID生成/" style="font-size: 10px;">主键ID生成</a> <a href="/tags/事务/" style="font-size: 10px;">事务</a> <a href="/tags/事务管理/" style="font-size: 10px;">事务管理</a> <a href="/tags/内存池/" style="font-size: 10px;">内存池</a> <a href="/tags/性能优化/" style="font-size: 10px;">性能优化</a> <a href="/tags/数据库同步/" style="font-size: 10px;">数据库同步</a> <a href="/tags/类库/" style="font-size: 10px;">类库</a> <a href="/tags/网络共享磁盘/" style="font-size: 10px;">网络共享磁盘</a> <a href="/tags/通信/" style="font-size: 10px;">通信</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">西北大学10级，来自陕西宝鸡，擅长各项Java、C#服务端技能，喜欢研究移动端开发，正在努力学习C++，是一个对计算机技术有浓厚兴趣的小屌丝。</div>
+				</section>
+				
+			</div>
+			<nav class="header-nav" style="margin-top: 100%;">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/GreatGarlic" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/GreatGarlic" title="weibo">weibo</a>
+					        
+						</div>
+			</nav>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">GreatGarlic</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/assets/BlogImages/GreatGarlic.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">GreatGarlic</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">热爱编程的大蒜君</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/GreatGarlic" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/GreatGarlic" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap">
+  
+    <article id="post-update-npm-self" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/08/07/update-npm-self/" class="article-date">
+  	<time datetime="2018-08-07T04:09:23.000Z" itemprop="datePublished">2018-08-07</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/07/update-npm-self/">node,npm 更新</a>
+    </h1>
+  
+
+      </header>
+      
+    
+   <div class="article-entry" itemprop="articleBody">
+      
+        
+        <h2 id="升级node"><a href="#升级node" class="headerlink" title="升级node"></a>升级node</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//先安装模块n</span><br><span class="line">$ npm install n -g;</span><br><span class="line">//将 node 升级到最新稳定版</span><br><span class="line">$ n stable;</span><br></pre></td></tr></table></figure>
+<h2 id="将npm升级到最新版"><a href="#将npm升级到最新版" class="headerlink" title="将npm升级到最新版"></a>将npm升级到最新版</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install npm@latest -g</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/npm/">npm</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-update-npm-package" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/08/07/update-npm-package/" class="article-date">
+  	<time datetime="2018-08-07T03:46:38.000Z" itemprop="datePublished">2018-08-07</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/07/update-npm-package/">更新npm依赖包版本</a>
+    </h1>
+  
+
+      </header>
+      
+    
+   <div class="article-entry" itemprop="articleBody">
+      
+        
+        <h2 id="安装npm-check"><a href="#安装npm-check" class="headerlink" title="安装npm-check"></a>安装npm-check</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g npm-check;</span><br></pre></td></tr></table></figure>
+<h2 id="使用npm-check检查当前工程的package更新情况"><a href="#使用npm-check检查当前工程的package更新情况" class="headerlink" title="使用npm-check检查当前工程的package更新情况"></a>使用npm-check检查当前工程的package更新情况</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm-check -u;</span><br></pre></td></tr></table></figure>
+<h2 id="使用npm-check检查全局的package更新情况"><a href="#使用npm-check检查全局的package更新情况" class="headerlink" title="使用npm-check检查全局的package更新情况"></a>使用npm-check检查全局的package更新情况</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm-check -u -g;</span><br></pre></td></tr></table></figure>
+<h2 id="空格选择更新-回车开始更新"><a href="#空格选择更新-回车开始更新" class="headerlink" title="空格选择更新,回车开始更新"></a>空格选择更新,回车开始更新</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">The global path you are searching is: C:\Users\Administrator\AppData\Roaming\npm\node_modules</span><br><span class="line">? Choose which packages to update. (Press &lt;space&gt; to select)</span><br><span class="line"></span><br><span class="line"> Patch Update Backwards-compatible bug fixes.</span><br><span class="line">&gt;( ) yarn  1.9.2  ❯  1.9.4  https://github.com/yarnpkg/yarn#readme</span><br><span class="line"></span><br><span class="line"> Major Update Potentially breaking API changes. Use caution.</span><br><span class="line"> ( ) cnpm  5.1.1  ❯  6.0.0  https://github.com/cnpm/cnpm</span><br><span class="line"></span><br><span class="line"> Space to select. Enter to start upgrading. Control-C to cancel.</span><br></pre></td></tr></table></figure>
+<h2 id="使用npm-check立刻更新package"><a href="#使用npm-check立刻更新package" class="headerlink" title="使用npm-check立刻更新package"></a>使用npm-check立刻更新package</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm-check -y;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/npm/">npm</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-node-npm" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/08/07/node-npm/" class="article-date">
+  	<time datetime="2018-08-07T02:06:44.000Z" itemprop="datePublished">2018-08-07</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/07/node-npm/">安装npm自动更换源插件</a>
+    </h1>
+  
+
+      </header>
+      
+    
+   <div class="article-entry" itemprop="articleBody">
+      
+        
+        <h2 id="安装nrm"><a href="#安装nrm" class="headerlink" title="安装nrm"></a>安装nrm</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g nrm;</span><br></pre></td></tr></table></figure>
+<h2 id="查看源"><a href="#查看源" class="headerlink" title="查看源"></a>查看源</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ nrm ls;</span><br><span class="line"></span><br><span class="line">* npm -----  https://registry.npmjs.org/</span><br><span class="line">  cnpm ----  http://r.cnpmjs.org/</span><br><span class="line">  taobao --  https://registry.npm.taobao.org/</span><br><span class="line">  nj ------  https://registry.nodejitsu.com/</span><br><span class="line">  rednpm -- http://registry.mirror.cqupt.edu.cn</span><br><span class="line">  skimdb -- https://skimdb.npmjs.com/registry</span><br></pre></td></tr></table></figure>
+<h2 id="测试源速度"><a href="#测试源速度" class="headerlink" title="测试源速度"></a>测试源速度</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ nrm test;</span><br><span class="line"></span><br><span class="line">  npm ---- 731ms</span><br><span class="line">  cnpm --- 272ms</span><br><span class="line">* taobao - 200ms</span><br><span class="line">  nj ----- Fetch Error</span><br><span class="line">  rednpm - Fetch Error</span><br><span class="line">  npmMirror  1249ms</span><br><span class="line">  edunpm - Fetch Error</span><br></pre></td></tr></table></figure>
+<h2 id="使用指定的源"><a href="#使用指定的源" class="headerlink" title="使用指定的源"></a>使用指定的源</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nrm use &lt;源名称&gt;;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/npm/">npm</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-oracle-data-import-and-export" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/07/29/oracle-data-import-and-export/" class="article-date">
+  	<time datetime="2018-07-28T16:12:59.000Z" itemprop="datePublished">2018-07-29</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/29/oracle-data-import-and-export/">Oracle 数据导入导出</a>
+    </h1>
+  
+
+      </header>
+      
+    
+   <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="本地连接Oracle数据库"><a href="#本地连接Oracle数据库" class="headerlink" title="本地连接Oracle数据库"></a>本地连接Oracle数据库</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sqlplus sys/&lt;password&gt; as sysdba;</span><br></pre></td></tr></table></figure>
+<h2 id="远程连接Oracle数据库"><a href="#远程连接Oracle数据库" class="headerlink" title="远程连接Oracle数据库"></a>远程连接Oracle数据库</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sqlplus &lt;username&gt;/&lt;password&gt;@&lt;ip&gt;:&lt;port&gt;/&lt;SID&gt;;</span><br></pre></td></tr></table></figure>
+<h2 id="创建dump文件存储目录"><a href="#创建dump文件存储目录" class="headerlink" title="创建dump文件存储目录"></a>创建dump文件存储目录</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; create or replace directory dump_dir as &apos;/u01/app/oracle/dumpfile&apos;;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Oracle数据维护/">Oracle数据维护</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2018/07/29/oracle-data-import-and-export/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-HID-Library_1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/22/HID-Library_1/" class="article-date">
+  	<time datetime="2016-05-22T15:30:30.000Z" itemprop="datePublished">2016-05-22</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/22/HID-Library_1/">使用C#开发运行在.Net2.0平台上的HID应用程序,遇到的那些坑</a>
+    </h1>
+  
+
+      </header>
+      
+    
+   <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p style="line-height:200%">当我们在用C#开发HID应用时，由于是通过DllImport调用的Windows API，在刚开始试用了各种开源HID库，经过尝试均无法正常工作，不是发不出去，就是接受不到消息，经过各种折腾，最后发现由于在调用HID相关的Windows API时，需要在32位的编译平台下编译才可以，于是用刚开始找的开源HID库都调试通过了，由于现成的HID库不符合业务需求，所以重构了一个比较简单的基于.Net2.0的HID库.<a href="http://liuyuan.ml/HidLibrary" target="_blank" rel="noopener"><font color="#CC9933" size="5px">HidLibrary</font></a></p>
+
+</blockquote>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Net-Framework-2-0/">.Net Framework 2.0</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HID/">HID</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/类库/">类库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/通信/">通信</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/05/22/HID-Library_1/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-javaServiceWrapper_1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/22/javaServiceWrapper_1/" class="article-date">
+  	<time datetime="2016-05-22T15:06:21.000Z" itemprop="datePublished">2016-05-22</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/22/javaServiceWrapper_1/">Java Service Wrapper 包装为Windows服务时，程序无法访问网络磁盘的解决方案</a>
+    </h1>
+  
+
+      </header>
+      
+    
+   <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p></p><p style="line-height:200%">右键点击服务-&gt;<code>属性</code>-&gt;选择<code>登录</code>选项<code>-&gt;选择`</code>此账户<code>-&gt;</code>浏览<code>-&gt;</code>高级<code>-&gt;</code>立即查找<code>-&gt;选择</code>Administrator<code>账户-&gt;输入</code>账户密码<code>-&gt;</code>确定<code></code>即可，如下图：</p><br>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java-Service-Wrapper/">Java Service Wrapper</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java程序部署/">Java程序部署</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Windows服务/">Windows服务</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络共享磁盘/">网络共享磁盘</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/05/22/javaServiceWrapper_1/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-canal_1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/22/canal_1/" class="article-date">
+  	<time datetime="2016-05-22T14:48:49.000Z" itemprop="datePublished">2016-05-22</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/22/canal_1/">在使用阿里的开源数据库同步服务otter时，使用Spring-Cache导致Spring找不到Bean方法时的解决方法</a>
+    </h1>
+  
+
+      </header>
+      
+    
+   <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p></p><p style="line-height:200%">由于otter库中依赖了Spring2.5.5,如果你使用较高版本的spring框架库时，会导致类冲突，这个时候，只需要在依赖声明中过滤掉Spring2.5.5即可保证程序正常运行，如图：</p><br>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Alibaba/">Alibaba</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring-Cache/">Spring-Cache</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/canal/">canal</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/otter/">otter</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库同步/">数据库同步</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/05/22/canal_1/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-spring-Transaction_1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/22/spring-Transaction_1/" class="article-date">
+  	<time datetime="2016-05-22T12:24:21.000Z" itemprop="datePublished">2016-05-22</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/22/spring-Transaction_1/">关于使用Spring声明式事务，在类的内部方法互相调用时，Spring无法拦截内部方法调用，导致事务不起作用的问题研究</a>
+    </h1>
+  
+
+      </header>
+      
+    
+   <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一、问题现象："><a href="#一、问题现象：" class="headerlink" title="一、问题现象："></a>一、问题现象：</h2><blockquote>
+<p></p><p style="line-height:200%"> 在程序设计中，有时候我们会遇到一种情况，在一个类的内部进行自我方法调用，然后通过调用这个方法使该方法进入事务管理，如图：</p><br>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AOP/">AOP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IOC/">IOC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/事务/">事务</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/05/22/spring-Transaction_1/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-mybatis_1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/22/mybatis_1/" class="article-date">
+  	<time datetime="2016-05-22T03:31:46.000Z" itemprop="datePublished">2016-05-22</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/22/mybatis_1/">基于Mybatis持久层框架，使用数据库事务时，插入一条数据后，无法返回主键ID的问题研究</a>
+    </h1>
+  
+
+      </header>
+      
+    
+   <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一、问题现象："><a href="#一、问题现象：" class="headerlink" title="一、问题现象："></a>一、问题现象：</h2><blockquote>
+<p></p><p style="line-height:200%"> 当我们在使用Mybatis时，然后在加入事务后，在这个时候如果需要插入一条数据后，返回主键ID，如图：</p><br>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mybatis/">Mybatis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/主键ID生成/">主键ID生成</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/事务管理/">事务管理</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/05/22/mybatis_1/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-netty_1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/19/netty_1/" class="article-date">
+  	<time datetime="2016-05-19T12:15:25.000Z" itemprop="datePublished">2016-05-19</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/19/netty_1/">Netty4.0+内存池的使用心得</a>
+    </h1>
+  
+
+      </header>
+      
+    
+   <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一、为什么要使用内存池？"><a href="#一、为什么要使用内存池？" class="headerlink" title="一、为什么要使用内存池？"></a>一、为什么要使用内存池？</h2><blockquote>
+<p style="line-height:200%"> 随着JVM虚拟机和JIT即时编译技术的发展，对象的分配和回收是个非常轻量级的工作。但是对于缓冲区Buffer，情况却稍有不同，特别是对于堆外直接内存的分配和回收，是一件耗时的操作。而且这些实例随着消息的处理朝生夕灭，这就会给服务器带来沉重的GC压力，同时消耗大量的内存。为了尽量重用缓冲区，Netty提供了基于内存池的缓冲区重用机制。性能测试表明，采用内存池的ByteBuf相比于朝生夕灭的ByteBuf，性能高<font color="red" size="5px">23倍</font>左右（性能数据与使用场景强相关）。</p>
+</blockquote>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NIO/">NIO</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Netty/">Netty</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内存池/">内存池</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能优化/">性能优化</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/05/19/netty_1/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+  
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		
+    	</div>
+      	<div class="footer-right">
+      		&copy; 2018 GreatGarlic
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: true,
+		isPost: false,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

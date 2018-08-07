@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>关于使用Spring声明式事务，在类的内部方法互相调用时，Spring无法拦截内部方法调用，导致事务不起作用的问题研究 | Garlic的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一、问题现象：  在程序设计中，有时候我们会遇到一种情况，在一个类的内部进行自我方法调用，然后通过调用这个方法使该方法进入事务管理，如图：">
+<meta name="keywords" content="Spring,事务,AOP,IOC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于使用Spring声明式事务，在类的内部方法互相调用时，Spring无法拦截内部方法调用，导致事务不起作用的问题研究">
+<meta property="og:url" content="http://greatgarlic.github.io/2016/05/22/spring-Transaction_1/index.html">
+<meta property="og:site_name" content="Garlic的博客">
+<meta property="og:description" content="一、问题现象：  在程序设计中，有时候我们会遇到一种情况，在一个类的内部进行自我方法调用，然后通过调用这个方法使该方法进入事务管理，如图：">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://greatgarlic.github.io/assets/BlogImages/spring-Transaction_1/1.jpg">
+<meta property="og:image" content="http://greatgarlic.github.io/assets/BlogImages/spring-Transaction_1/2.jpg">
+<meta property="og:image" content="http://greatgarlic.github.io/assets/BlogImages/spring-Transaction_1/3.jpg">
+<meta property="og:image" content="http://greatgarlic.github.io/assets/BlogImages/spring-Transaction_1/4.jpg">
+<meta property="og:image" content="http://greatgarlic.github.io/assets/BlogImages/spring-Transaction_1/5.jpg">
+<meta property="og:image" content="http://greatgarlic.github.io/assets/BlogImages/spring-Transaction_1/6.jpg">
+<meta property="og:image" content="http://greatgarlic.github.io/assets/BlogImages/spring-Transaction_1/7.jpg">
+<meta property="og:image" content="http://greatgarlic.github.io/assets/BlogImages/spring-Transaction_1/8.jpg">
+<meta property="og:image" content="http://greatgarlic.github.io/assets/BlogImages/spring-Transaction_1/9.jpg">
+<meta property="og:image" content="http://greatgarlic.github.io/assets/BlogImages/spring-Transaction_1/10.jpg">
+<meta property="og:image" content="http://greatgarlic.github.io/assets/BlogImages/spring-Transaction_1/11.jpg">
+<meta property="og:image" content="http://greatgarlic.github.io/assets/BlogImages/spring-Transaction_1/12.jpg">
+<meta property="og:image" content="http://greatgarlic.github.io/assets/BlogImages/spring-Transaction_1/13.jpg">
+<meta property="og:image" content="http://greatgarlic.github.io/assets/BlogImages/spring-Transaction_1/14.jpg">
+<meta property="og:updated_time" content="2016-05-23T01:07:50.990Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于使用Spring声明式事务，在类的内部方法互相调用时，Spring无法拦截内部方法调用，导致事务不起作用的问题研究">
+<meta name="twitter:description" content="一、问题现象：  在程序设计中，有时候我们会遇到一种情况，在一个类的内部进行自我方法调用，然后通过调用这个方法使该方法进入事务管理，如图：">
+<meta name="twitter:image" content="http://greatgarlic.github.io/assets/BlogImages/spring-Transaction_1/1.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="Garlic的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/assets/BlogImages/WebTitle.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/assets/BlogImages/GreatGarlic.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">GreatGarlic</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">热爱编程的大蒜君</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+					    <div class="icon-wrap icon-ribbon" data-idx="0">
+							<div class="ribbon"></div>
+						</div>
+						<div class="icon-wrap icon-house hide" data-idx="1">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+					    <li>标签</li>
+						<li>菜单</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Net-Framework-2-0/" style="font-size: 10px;">.Net Framework 2.0</a> <a href="/tags/AOP/" style="font-size: 10px;">AOP</a> <a href="/tags/Alibaba/" style="font-size: 10px;">Alibaba</a> <a href="/tags/C/" style="font-size: 10px;">C#</a> <a href="/tags/HID/" style="font-size: 10px;">HID</a> <a href="/tags/IOC/" style="font-size: 10px;">IOC</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/Java-Service-Wrapper/" style="font-size: 10px;">Java Service Wrapper</a> <a href="/tags/Java程序部署/" style="font-size: 10px;">Java程序部署</a> <a href="/tags/Mybatis/" style="font-size: 10px;">Mybatis</a> <a href="/tags/NIO/" style="font-size: 10px;">NIO</a> <a href="/tags/Netty/" style="font-size: 10px;">Netty</a> <a href="/tags/Oracle数据维护/" style="font-size: 10px;">Oracle数据维护</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/Spring-Cache/" style="font-size: 10px;">Spring-Cache</a> <a href="/tags/Windows服务/" style="font-size: 10px;">Windows服务</a> <a href="/tags/canal/" style="font-size: 10px;">canal</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/npm/" style="font-size: 20px;">npm</a> <a href="/tags/otter/" style="font-size: 10px;">otter</a> <a href="/tags/主键ID生成/" style="font-size: 10px;">主键ID生成</a> <a href="/tags/事务/" style="font-size: 10px;">事务</a> <a href="/tags/事务管理/" style="font-size: 10px;">事务管理</a> <a href="/tags/内存池/" style="font-size: 10px;">内存池</a> <a href="/tags/性能优化/" style="font-size: 10px;">性能优化</a> <a href="/tags/数据库同步/" style="font-size: 10px;">数据库同步</a> <a href="/tags/类库/" style="font-size: 10px;">类库</a> <a href="/tags/网络共享磁盘/" style="font-size: 10px;">网络共享磁盘</a> <a href="/tags/通信/" style="font-size: 10px;">通信</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">西北大学10级，来自陕西宝鸡，擅长各项Java、C#服务端技能，喜欢研究移动端开发，正在努力学习C++，是一个对计算机技术有浓厚兴趣的小屌丝。</div>
+				</section>
+				
+			</div>
+			<nav class="header-nav" style="margin-top: 100%;">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/GreatGarlic" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/GreatGarlic" title="weibo">weibo</a>
+					        
+						</div>
+			</nav>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">GreatGarlic</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/assets/BlogImages/GreatGarlic.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">GreatGarlic</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">热爱编程的大蒜君</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/GreatGarlic" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/GreatGarlic" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-spring-Transaction_1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/22/spring-Transaction_1/" class="article-date">
+  	<time datetime="2016-05-22T12:24:21.000Z" itemprop="datePublished">2016-05-22</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      关于使用Spring声明式事务，在类的内部方法互相调用时，Spring无法拦截内部方法调用，导致事务不起作用的问题研究
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AOP/">AOP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IOC/">IOC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/事务/">事务</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+   <div class="article-entry" itemprop="articleBody">
+      
+        
+        <div id="toc" class="article-toc">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、问题现象："><span class="toc-text">一、问题现象：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、SpringAop动态代理："><span class="toc-text">二、SpringAop动态代理：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、解决方案1："><span class="toc-text">三、解决方案1：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、解决方案2："><span class="toc-text">四、解决方案2：</span></a></li></ol>
+          <hr/>
+        </div>
+        
+        <h2 id="一、问题现象："><a href="#一、问题现象：" class="headerlink" title="一、问题现象："></a>一、问题现象：</h2><blockquote>
+<p></p><p style="line-height:200%"> 在程序设计中，有时候我们会遇到一种情况，在一个类的内部进行自我方法调用，然后通过调用这个方法使该方法进入事务管理，如图：</p><br><a id="more"></a><p></p>
+</blockquote>
+<blockquote>
+<p><img src="/assets/BlogImages/spring-Transaction_1/1.jpg" alt=""></p>
+<p><font color="#CC9933" size="5px">Spring</font>声明式事务管理的配置如图：<br><img src="/assets/BlogImages/spring-Transaction_1/2.jpg" alt=""><br>接下来，当我们执行程序后发现控制台打印如下日志：<br><img src="/assets/BlogImages/spring-Transaction_1/3.jpg" alt=""></p>
+<p style="line-height:200%">现在，我们已经知道了本文所描述的问题出现所在，先不解答问题如何处理，我们先了解一下Spring声明式事务的原理，其实Spring是基于它的<font color="#CC9933" size="5px">AOP</font>动态代理技术来实现声明式事务管理的，那么Spring的AOP动态代理又是怎么样的呢？接下来我们会做介绍。</p>
+</blockquote>
+<h2 id="二、SpringAop动态代理："><a href="#二、SpringAop动态代理：" class="headerlink" title="二、SpringAop动态代理："></a>二、SpringAop动态代理：</h2><blockquote>
+<p></p><p style="line-height:200%"><font color="red" size="5px">AOP代理</font>其实是由AOP框架动态生成的一个对象，该对象可作为目标对象使用。AOP代理包含了目标对象的全部方法，但AOP 代理中的方法与目标对象的方法存在差异：AOP方法在特定切入点添加了增强处理，并回调了目标对象的方法。</p><br>AOP代理所包含的方法与目标对象的方法示意图如图所示：<p></p>
+</blockquote>
+<blockquote>
+<p><img src="/assets/BlogImages/spring-Transaction_1/4.jpg" alt=""></p>
+<p style="line-height:200%">Spring的AOP代理由Spring的<font color="red" size="5px">IoC容器</font>负责生成、管理，其依赖关系也由IoC 容器负责管理。因此，AOP代理可以直接使用容器中的其他 Bean 实例作为目标，这种关系可由IoC容器的依赖注入提供。</p>
+</blockquote>
+<blockquote>
+<p>纵观AOP编程，其中需要程序员参与的只有<font color="#CC9933" size="5px">3</font>个部分：</p>
+<blockquote>
+<p>1.定义普通业务组件。<br>2.定义切入点，一个切入点可能横切多个业务组件。<br>3.定义增强处理，增强处理就是在 AOP 框架为普通业务组件织入的处理动作。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p style="line-height:200%">上面3个部分的第一个部分是最平常不过的事情，无须额外说明。那么进行 AOP 编程的关键就是定义切入点和定义增强处理。一旦定义了合适的切入点和增强处理，AOP 框架将会自动生成 AOP 代理，而 AOP 代理的方法大致有如下公式：</p>
+</blockquote>
+<blockquote>
+<font color="#CC9933" size="5px"><code>代理对象的方法 = 增强处理 + 被代理对象的方法</code></font>
+</blockquote>
+<blockquote>
+<p style="line-height:200%">在上面这个业务定义中，不难发现 Spring AOP 的实现原理其实很简单：AOP 框架负责动态地生成 AOP 代理类，这个代理类的方法则由 <font color="#CC9933" size="5px">Advice</font> 和<font color="#CC9933" size="5px">回调目标对象</font>的方法所组成。</p>
+</blockquote>
+<blockquote>
+<p style="line-height:200%">对于上一张图所示的软件调用结构：当方法 1、方法 2、方法 3 ……都需要去调用某个具有<font color="#CC9933" size="5px">横切</font>性质的方法时，传统的做法是程序员去手动修改方法 1、方法 2、方法 3 ……、通过代码来调用这个具有横切性质的方法，但这种做法的可扩展性不好，因为每次都要改代码。</p>
+</blockquote>
+<blockquote>
+<p></p><p style="line-height:200%">于是 AOP 框架出现了，AOP 框架则可以“动态的”生成一个新的代理类，而这个代理类所包含的方法 1、方法2、方法 3 ……也增加了调用这个具有“横切”性质的方法——但这种调用由 AOP 框架自动生成的代理类来负责，因此具有了极好的扩展性。程序员无需手动修改方法 1、方法 2、方法 3 的代码，程序员只要定义切入点即可——AOP框架所生成的 AOP 代理类中包含了新的方法 1、访法 2、方法 3，而 AOP 框架会根据切入点来决定是否要在方法1、方法 2、方法 3中回调具有“横切”性质的方法。</p><br>简而言之：AOP 原理的奥妙就在于动态地生成了代理类。<p></p>
+</blockquote>
+<blockquote>
+<p>接下来，来看下我们的业务中，如果要使用AOP，那么过程应该是这样的，如下图所示：<br><img src="/assets/BlogImages/spring-Transaction_1/5.jpg" alt=""><br>但是，实际上我们的代码是这样执行的，如下图：<br><img src="/assets/BlogImages/spring-Transaction_1/6.jpg" alt=""></p>
+<p style="line-height:200%">这样的结果就是，我们先前提到的最初的问题，调用<code>insertValue()</code>方法后，SpringAop拦截不到方法调用，造成无法进入事务管理。</p>
+</blockquote>
+<h2 id="三、解决方案1："><a href="#三、解决方案1：" class="headerlink" title="三、解决方案1："></a>三、解决方案1：</h2><blockquote>
+<p></p><p style="line-height:200%">此处的解决方案是参照Spring官方对于自身方法调用的解决方法，利用暴露本地线程，代理目标类，来完成自身调用时，触发AOP拦截，进入事务管理，核心工具类为,<font color="#CC9933" size="5px"><code>AopContext.currentProxy()</code></font>,从AOP容器中取出代理类，在内部中重新调用要拦截的方法，从而进入事务管理。</p><br>Spring配置如下图：<br><img src="/assets/BlogImages/spring-Transaction_1/7.jpg" alt=""><br>代码的写法如下图所示：<br><img src="/assets/BlogImages/spring-Transaction_1/8.jpg" alt=""><br>此时进行<font color="#CC9933" size="5px">数据库</font>操作，控制台打印日志如下：<br><img src="/assets/BlogImages/spring-Transaction_1/9.jpg" alt=""><br>当整个入库操作执行完成后，会提交事务，如下图：<br><img src="/assets/BlogImages/spring-Transaction_1/10.jpg" alt=""><br>至此，事务提交完成，此方法可行。<p></p>
+</blockquote>
+<blockquote>
+<p></p><p style="line-height:200%">但是，这种方法有一个缺点，具有<font color="#CC9933" size="5px">严重的代码侵入性</font>，导致声明式事务的技术形同虚设，并且如果想取消事务，注释了Spring配置中的AOP相关配置，会出现非受检异常，导致程序无法运行。</p><br>那么，如何避免具有代码侵入性呢？现在，我们使用解决方案2。<p></p>
+</blockquote>
+<h2 id="四、解决方案2："><a href="#四、解决方案2：" class="headerlink" title="四、解决方案2："></a>四、解决方案2：</h2><blockquote>
+<p style="line-height:200%">此处的解决方案是利用Spring的IOC容器，从IOC容器中重新获得代理类，调用业务类的<code>insertValue()</code>方法，从而使之进入事务管理，Spring配置如下图：</p>
+</blockquote>
+<blockquote>
+<p><img src="/assets/BlogImages/spring-Transaction_1/11.jpg" alt=""><br>代码写法如下图：<br><img src="/assets/BlogImages/spring-Transaction_1/12.jpg" alt=""><br>要在类中注入Spring的应用程序上下文。<br><img src="/assets/BlogImages/spring-Transaction_1/13.jpg" alt=""><br>此时，执行程序，并且观察控制台日志，如下图:<br><img src="/assets/BlogImages/spring-Transaction_1/14.jpg" alt=""><br>至此，此解决方案完成。</p>
+<p></p><p style="line-height:200%">此方案的优点就是<font color="#CC9933" size="5px">没有严重的代码侵入</font>，并且，当你注释掉SpringAOP配置的时候，运行程序正常，只是不进入事务管理了而已，没有任何其他问题。</p><p></p>
+<p></p><p style="line-height:200%">唯一的缺点就是，要求程序设计者必须很清楚，哪里该进入事务，哪里就该从SpringIOC容器中取到此对象的实例，并调用要进入事务的方法。</p><br>最后总结一下就是，<font color="#CC9933" style="font-weight:bold;" size="5px">程序设计是一门危险的平衡艺术！</font><p></p>
+</blockquote>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/05/22/canal_1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          在使用阿里的开源数据库同步服务otter时，使用Spring-Cache导致Spring找不到Bean方法时的解决方法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/05/22/mybatis_1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">基于Mybatis持久层框架，使用数据库事务时，插入一条数据后，无法返回主键ID的问题研究</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="spring-Transaction_1" data-title="关于使用Spring声明式事务，在类的内部方法互相调用时，Spring无法拦截内部方法调用，导致事务不起作用的问题研究" data-url="http://greatgarlic.github.io/2016/05/22/spring-Transaction_1/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"greatgarlic"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		
+    	</div>
+      	<div class="footer-right">
+      		&copy; 2018 GreatGarlic
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
